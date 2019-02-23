@@ -22,7 +22,6 @@ export default class RecipeList extends Component {
             })}
           </div>
         </div>
-        <Recipe />
       </React.Fragment>
     );
   }
