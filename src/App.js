@@ -15,22 +15,30 @@ class App extends Component {
     details_id: 35375,
     pageIndex: 1,
     search: "",
-    query: "&q="
+    query: "&q=",
+    error: ""
   };
   async getRecipes() {
     try {
       const data = await fetch(this.state.url);
       const jsonData = await data.json();
-      this.setState({
-        recipes: jsonData.recipes
-      });
+      console.log(jsonData);
+      if (jsonData.recipes.length === 0) {
+        this.setState(() => {
+          return { error: "sorry but your search did not return any results" };
+        });
+      } else {
+        this.setState(() => {
+          return { recipes: jsonData.recipes };
+        });
+      }
     } catch (error) {
       console.log(error);
     }
   }
-  componentDidMount() {
-    this.getRecipes();
-  }
+  // componentDidMount() {
+  //   this.getRecipes();
+  // }
 
   displayPage = index => {
     switch (index) {
@@ -43,6 +51,7 @@ class App extends Component {
             value={this.state.search}
             handleChange={this.handleChange}
             handleSubmit={this.handleSubmit}
+            error={this.state.error}
           />
         );
       case 0:
