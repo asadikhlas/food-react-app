@@ -11,7 +11,8 @@ class App extends Component {
     url:
       "https://www.food2fork.com/api/search?key=7f3620973180a4b890021a6aec83e0da",
     details_id: 35375,
-    pageIndex: 1
+    pageIndex: 1,
+    search: ""
   };
   async getRecipes() {
     try {
@@ -32,9 +33,22 @@ class App extends Component {
     switch (index) {
       default:
       case 1:
-        return <RecipeList recipes={this.state.recipes} handleDetails={this.handleDetails} />;
+        return (
+          <RecipeList
+            recipes={this.state.recipes}
+            handleDetails={this.handleDetails}
+            value={this.state.search}
+            handleChange={this.handleChange}
+            handleSubmit={this.handleSubmit}
+          />
+        );
       case 0:
-        return <RecipeDetails id={this.state.details_id} handleIndex={this.handleIndex} />;
+        return (
+          <RecipeDetails
+            id={this.state.details_id}
+            handleIndex={this.handleIndex}
+          />
+        );
     }
   };
   handleIndex = index => {
@@ -47,6 +61,13 @@ class App extends Component {
       pageIndex: index,
       details_id: id
     });
+  };
+  handleChange = event => {
+    console.log("hello from the change");
+  };
+  handleSubmit = event => {
+    event.preventDefault();
+    console.log("hello from the submit");
   };
 
   render() {
