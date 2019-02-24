@@ -2,24 +2,43 @@ import React, { Component } from "react";
 import { recipe } from "../tempDetails";
 
 export default class RecipeDetails extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      recipe: recipe,
-      url: `https://www.food2fork.com/api/get?key=7f3620973180a4b890021a6aec83e0da&rId=${
-        this.props.id
-      }`
-    };
-  }
+  // constructor(props) {
+  //   super(props);
+  //   this.state = {
+  //     recipe: recipe,
+  //     url: `https://www.food2fork.com/api/get?key=7f3620973180a4b890021a6aec83e0da&rId=${
+  //       this.props.id
+  //     }`
+  //   };
+  // }
 
- 
+  // async componentDidMount() {
+  //   try {
+  //     const data = await fetch(this.state.url);
+  //     const jsonData = await data.json();
+  //     this.setState({
+  //       recipe: jsonData.recipe
+  //     });
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // }
+
+  state = {
+    recipe: recipe
+  };
   async componentDidMount() {
+    const id = this.props.id;
+    const url = `https://www.food2fork.com/api/get?key=7f3620973180a4b890021a6aec83e0da&rId=${id}`;
     try {
-      const data = await fetch(this.state.url);
+      const data = await fetch(url);
       const jsonData = await data.json();
-      this.setState({
-        recipe: jsonData.recipe
-      });
+      this.setState(
+        (state, props) => {
+          return { recipe: jsonData.recipe };
+        },
+        () => {}
+      );
     } catch (error) {
       console.log(error);
     }
@@ -71,15 +90,13 @@ export default class RecipeDetails extends Component {
               </a>
               <ul className="list-group mt-4">
                 <h2 className="mt-3 mb-4">Ingredients</h2>
-                {
-                  ingredients.map((item,index)=>{
-                    return(
-                      <li key={index} className="list-group-item text-slanted">
-                          {item}
-                      </li>
-                    )
-                  })
-                }
+                {ingredients.map((item, index) => {
+                  return (
+                    <li key={index} className="list-group-item text-slanted">
+                      {item}
+                    </li>
+                  );
+                })}
               </ul>
             </div>
           </div>
