@@ -11,7 +11,7 @@ class App extends Component {
     url:
       "https://www.food2fork.com/api/search?key=7f3620973180a4b890021a6aec83e0da",
     details_id: 35375,
-    pageIndex: 0
+    pageIndex: 1
   };
   async getRecipes() {
     try {
