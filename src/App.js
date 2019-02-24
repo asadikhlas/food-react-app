@@ -3,6 +3,7 @@ import "./App.css";
 import { recipes } from "./tempList";
 import RecipeList from "./components/recipeList";
 import RecipeDetails from "./components/recipeDetails";
+import { runInThisContext } from "vm";
 
 class App extends Component {
   state = {
@@ -10,7 +11,7 @@ class App extends Component {
     url:
       "https://www.food2fork.com/api/search?key=7f3620973180a4b890021a6aec83e0da",
     details_id: 35375,
-    pageIndex:''
+    pageIndex: 0
   };
   async getRecipes() {
     try {
@@ -27,23 +28,31 @@ class App extends Component {
     this.getRecipes();
   }
 
-  displayPage = (index) => {
-    switch(index){
+  displayPage = index => {
+    switch (index) {
       default:
       case 1:
-      return(<RecipeList recipes={this.state.recipes} />)
+        return <RecipeList recipes={this.state.recipes} handleDetails={this.handleDetails} />;
       case 0:
-      return(<RecipeDetails id={this.state.details_id} />)
+        return <RecipeDetails id={this.state.details_id} handleIndex={this.handleIndex} />;
     }
-  }
+  };
+  handleIndex = index => {
+    this.setState({
+      pageIndex: index
+    });
+  };
+  handleDetails = (index, id) => {
+    this.setState({
+      pageIndex: index,
+      details_id: id
+    });
+  };
 
   render() {
     // console.log(this.state.recipes);
     return (
-      <React.Fragment>
-        
-          {this.displayPage(this.state.pageIndex)}
-      </React.Fragment>
+      <React.Fragment>{this.displayPage(this.state.pageIndex)}</React.Fragment>
     );
   }
 }
