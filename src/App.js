@@ -10,9 +10,12 @@ class App extends Component {
     recipes: recipes,
     url:
       "https://www.food2fork.com/api/search?key=7f3620973180a4b890021a6aec83e0da",
+    base_url:
+      "https://www.food2fork.com/api/search?key=7f3620973180a4b890021a6aec83e0da",
     details_id: 35375,
     pageIndex: 1,
-    search: ""
+    search: "",
+    query: "&q="
   };
   async getRecipes() {
     try {
@@ -25,9 +28,9 @@ class App extends Component {
       console.log(error);
     }
   }
-  // componentDidMount() {
-  //   this.getRecipes();
-  // }
+  componentDidMount() {
+    this.getRecipes();
+  }
 
   displayPage = index => {
     switch (index) {
@@ -63,11 +66,26 @@ class App extends Component {
     });
   };
   handleChange = event => {
-    console.log("hello from the change");
+    this.setState(
+      {
+        search: event.target.value
+      },
+      () => {
+        console.log(this.state.search);
+      }
+    );
   };
   handleSubmit = event => {
     event.preventDefault();
-    console.log("hello from the submit");
+    const { base_url, query, search } = this.state;
+    this.setState(
+      () => {
+        return { url: `${base_url}${query}${search}`, search: "" };
+      },
+      () => {
+        this.getRecipes();
+      }
+    );
   };
 
   render() {
