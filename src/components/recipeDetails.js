@@ -53,7 +53,7 @@ export default class RecipeDetails extends Component {
       title,
       ingredients
     } = this.state.recipe;
-    const {handleIndex} = this.props
+    const { handleIndex } = this.props;
     return (
       <React.Fragment>
         <div className="container">
@@ -62,7 +62,7 @@ export default class RecipeDetails extends Component {
               <button
                 type="button"
                 className="btn btn-warning mb-5 text-capitalize"
-                onClick={()=>handleIndex(1)}
+                onClick={() => handleIndex(1)}
               >
                 back to recipe list
               </button>
